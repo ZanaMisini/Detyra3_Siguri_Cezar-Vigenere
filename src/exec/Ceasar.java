@@ -147,7 +147,92 @@ public class Ceasar extends javax.swing.JFrame {
         );
      
                  
-     
+      layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(jLabel1)
+                                .addGap(69, 69, 69)
+                                .addComponent(t1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(17, 17, 17)
+                                .addComponent(t6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(17, 17, 17)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(t2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel2))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(89, 89, 89)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(b1)
+                                                        .addComponent(b2))
+                                                .addGap(0, 94, Short.MAX_VALUE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jLabel5)
+                                                        .addComponent(t3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel4)
+                                .addGap(32, 32, 32)
+                                .addComponent(b3)
+                                .addGap(23, 23, 23))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addGap(137, 137, 137)
+                                        .addComponent(jLabel3)
+                                        .addContainerGap(349, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addGap(185, 185, 185)
+                                        .addComponent(jLabel6)
+                                        .addContainerGap(349, Short.MAX_VALUE)))
+        );
+
+        pack();
+    }
+    private static final String aplha = "abcdefghijklmnopqrstuvwxyz";
+    static char alphabet;
+    public static String encrypt(String plaintext, int shift) {
+        String ciphertext = "";
+        for(int i=0; i < plaintext.length();i++)
+        {
+            // Shift one character at a time
+            alphabet = plaintext.charAt(i);
+
+            // if alphabet lies between a and z
+            if(alphabet >= 'a' && alphabet <= 'z')
+            {
+                // shift alphabet
+                alphabet = (char) (alphabet + shift);
+                // if shift alphabet greater than 'z'
+                if(alphabet > 'z') {
+                    // reshift to starting position
+                    alphabet = (char) (alphabet+'a'-'z'-1);
+                }
+                ciphertext = ciphertext + alphabet;
+            }
+
+            // if alphabet lies between 'A'and 'Z'
+            else if(alphabet >= 'A' && alphabet <= 'Z') {
+                // shift alphabet
+                alphabet = (char) (alphabet + shift);
+
+                // if shift alphabet greater than 'Z'
+                if(alphabet > 'Z') {
+                    //reshift to starting position
+                    alphabet = (char) (alphabet+'A'-'Z'-1);
+                }
+                ciphertext = ciphertext + alphabet;
+            }
+            else {
+                ciphertext = ciphertext + alphabet;
+            }
+
+        }
+
+        return ciphertext;
+    }
+
                                        
        
 
