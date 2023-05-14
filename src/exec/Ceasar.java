@@ -233,6 +233,204 @@ public class Ceasar extends javax.swing.JFrame {
         return ciphertext;
     }
 
+    
+    public static String decrypt(String ciphertext, int shift) {
+        ciphertext = ciphertext.toLowerCase();
+
+        String decryptMessage = "";
+        for(int i=0; i < ciphertext.length();i++)
+
+        {
+            // Shift one character at a time
+            char alphabet = ciphertext.charAt(i);
+            // if alphabet lies between a and z
+            if(alphabet >= 'a' && alphabet <= 'z')
+            {
+                // shift alphabet
+                alphabet = (char) (alphabet - shift);
+
+                // shift alphabet lesser than 'a'
+                if(alphabet < 'a') {
+                    //reshift to starting position
+                    alphabet = (char) (alphabet-'a'+'z'+1);
+                }
+                decryptMessage = decryptMessage + alphabet;
+            }
+            // if alphabet lies between A and Z
+            else if(alphabet >= 'A' && alphabet <= 'Z')
+            {
+                // shift alphabet
+                alphabet = (char) (alphabet - shift);
+
+                //shift alphabet lesser than 'A'
+                if (alphabet < 'A') {
+                    // reshift to starting position
+                    alphabet = (char) (alphabet-'A'+'Z'+1);
+                }
+                decryptMessage = decryptMessage + alphabet;
+            }
+            else
+            {
+                decryptMessage = decryptMessage + alphabet;
+            }
+        }
+        return decryptMessage;
+    }
+
+    private void b1ActionPerformed(java.awt.event.ActionEvent evt) {
+        String str = t1.getText();
+        String key = t2.getText();
+        String path = t6.getText();
+        int k = Integer.parseInt(key);
+        str = str.toLowerCase();
+        String newtext = "";
+
+        if(str.startsWith("file:")) {
+            System.out.println("Looking for file...");
+
+            String[] fstr = str.split(": ", 2);
+
+            try {
+                File file = new File(fstr[1]);
+                file.setReadable(true);
+                Scanner myReader = new Scanner(file);
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    str = data;
+                }
+                myReader.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("File wasn't found!");
+            }
+            System.out.println("File found!");
+            newtext = encrypt(str,k);
+
+            try {
+                File myObj = new File(path);
+                if (myObj.createNewFile()) {
+                    System.out.println("File created: " + myObj.getName());
+
+                    FileWriter myWriter = new FileWriter(path);
+                    myWriter.write(newtext);
+                    myWriter.close();
+
+                } else {
+                    System.out.println("Location not found!");
+
+                }
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+
+            }
+            newtext = "File created at: " + path;
+            t3.setText(newtext);
+
+        }
+        else {
+            newtext = encrypt(str,k);
+            t3.setText(newtext);
+        }
+
+    }
+
+    private void b2ActionPerformed(java.awt.event.ActionEvent evt) {
+
+        String str2 =t1.getText();
+        String key=t2.getText();
+        String path = t6.getText();
+        int k=Integer.parseInt(key);
+        String plainText = "";
+        plainText = decrypt(str2,k);
+        t3.setText(plainText);
+
+        if(str2.startsWith("file:")) {
+            System.out.println("Looking for file...");
+
+            String[] fstr = str2.split(": ", 2);
+
+            try {
+                File file = new File(fstr[1]);
+                file.setReadable(true);
+                Scanner myReader = new Scanner(file);
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    str2 = data;
+                }
+                myReader.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("File wasn't found!");
+            }
+            System.out.println("File found!");
+            plainText = decrypt(str2,k);
+
+            try {
+                File myObj = new File(path);
+                if (myObj.createNewFile()) {
+                    System.out.println("File created: " + myObj.getName());
+
+                    FileWriter myWriter = new FileWriter(path);
+                    myWriter.write(plainText);
+                    myWriter.close();
+
+                } else {
+                    System.out.println("Location not found!");
+
+                }
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+
+            }
+            plainText = "File created at: " + path;
+            t3.setText(plainText);
+        }
+        else {
+            plainText = decrypt(str2,k);
+            t3.setText(plainText);
+        }
+    }
+
+    private void b3ActionPerformed(java.awt.event.ActionEvent evt) {
+        t1.setText("");
+        t2.setText("");
+        t3.setText("");
+    }
+
+    public static void main(String args[]) {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Ceasar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Ceasar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Ceasar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Ceasar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+    }
+
+
+    private javax.swing.JButton b1;
+    private javax.swing.JButton b2;
+    private javax.swing.JButton b3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JTextField t1;
+    private javax.swing.JTextField t2;
+    private javax.swing.JTextField t3;
+    private javax.swing.JTextField t6;
+
+}
+
                                        
        
 
